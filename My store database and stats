@@ -1,0 +1,21 @@
+--create a mystore database and insert 15 values into it
+
+CREATE TABLE mystore(id INTEGER PRIMARY KEY, name TEXT,stock INTEGER, product_type TEXT,available TEXT, price INTEGER); 
+INSERT INTO mystore VALUES(1,"t-shirt",78,"clothes","yes",7656);
+INSERT INTO mystore VALUES(2,"underwear",456,"clothes","yes",13);
+INSERT INTO mystore VALUES(3,"cargos",23,"clothes","yes",578);
+INSERT INTO mystore VALUES(4,"trousers",34,"clothes","yes",678);
+INSERT INTO mystore VALUES(5,"jeans",56,"clothes","yes",123);
+INSERT INTO mystore VALUES(6,"lingerie",444,"clothes","yes",234);
+INSERT INTO mystore VALUES(7,"knitwear",90,"clothes","yes",345);
+INSERT INTO mystore VALUES(8,"jumper",45,"clothes","yes",567);
+INSERT INTO mystore VALUES(9,"hoodie",85,"clothes","yes",678);
+INSERT INTO mystore VALUES(10,"sweatshirt",102,"clothes","yes",890);
+INSERT INTO mystore VALUES(11,"pants",234,"clothes","yes",012);
+INSERT INTO mystore VALUES(12,"shirt",67,"clothes","yes",935);
+INSERT INTO mystore VALUES(134,"pyjamas",42,"clothes","yes",67);
+INSERT INTO mystore VALUES(14,"bolero",20,"clothes","yes",78);
+INSERT INTO mystore VALUES(15,"tanktop",11,"clothes","yes",35);
+
+--display the database ordered by price.
+SELECT * FROM mystore ORDER BY price;
