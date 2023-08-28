@@ -1,0 +1,52 @@
+--This query calculates the average, maximum, and minimum values for various attributes such as popularity, intelligence, strength, speed, durability, energy projection, and fighting skills across all Marvel characters.
+
+SELECT
+    AVG(popularity) AS avg_popularity,
+    MAX(popularity) AS max_popularity,
+    MIN(popularity) AS min_popularity,
+    AVG(intelligence) AS avg_intelligence,
+    MAX(intelligence) AS max_intelligence,
+    MIN(intelligence) AS min_intelligence,
+    AVG(strength) AS avg_strength,
+    MAX(strength) AS max_strength,
+    MIN(strength) AS min_strength,
+    AVG(speed) AS avg_speed,
+    MAX(speed) AS max_speed,
+    MIN(speed) AS min_speed,
+    AVG(durability) AS avg_durability,
+    MAX(durability) AS max_durability,
+    MIN(durability) AS min_durability,
+    AVG(energy_Projection) AS avg_energy_projection,
+    MAX(energy_Projection) AS max_energy_projection,
+    MIN(energy_Projection) AS min_energy_projection,
+    AVG(fighting_Skills) AS avg_fighting_skills,
+    MAX(fighting_Skills) AS max_fighting_skills,
+    MIN(fighting_Skills) AS min_fighting_skills
+FROM marvels;
+
+--This query groups Marvel characters by their alignment (Good, Neutral, Bad) and calculates the average popularity and strength for each alignment.
+--It filters out the results to only include alignments with an average strength greater than 4 and an average popularity greater than 10.
+
+SELECT alignment, AVG(popularity) AS avg_popularity,AVG(strength) AS avg_strength
+FROM marvels
+GROUP BY alignment
+HAVING avg_strength > 4 AND avg_popularity > 10;
+
+--This query categorizes Marvel characters based on their alignment and their power levels as determined by their average intelligence. The categories are 'Low Power,' 'Medium Power,' and 'High Power.'
+
+SELECT alignment,
+CASE
+WHEN AVG(intelligence) <= 3 THEN 'Low Power'
+WHEN AVG(intelligence) <= 5 THEN 'Medium Power'
+ELSE 'High Power'
+END AS power_category,
+COUNT(*) AS character_count
+FROM marvels
+GROUP BY alignment,power_category;
+
+--This query selects Marvel characters with either a good alignment and high strength or a bad alignment and low intelligence. 
+
+SELECT name,alignment,strength,intelligence
+FROM marvel
+WHERE (alignment='Good'AND strength >=5)
+OR (alignment='Bad' AND intelligence<=3);
