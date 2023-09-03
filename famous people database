@@ -1,0 +1,91 @@
+--creating a fictional charceters table and inserting values into it.
+
+CREATE TABLE fictional_characters (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name TEXT,
+    birthdate TEXT,
+    house_at_hogwarts TEXT
+);
+
+INSERT INTO fictional_characters (full_name, birthdate, house_at_hogwarts)
+VALUES ('Harry James Potter', '1980-07-31', 'Gryffindor');
+
+INSERT INTO fictional_characters (full_name, birthdate, house_at_hogwarts)
+VALUES ('Hermione Granger', '1979-09-19', 'Gryffindor');
+
+INSERT INTO fictional_characters (full_name, birthdate, house_at_hogwarts)
+VALUES ('Ron Weasley', '1980-03-01', 'Gryffindor');
+
+--creating a character relationships table.
+
+CREATE TABLE character_relationships (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+character_id INTEGER,
+related_character_id INTEGER,
+relationship_description TEXT
+);
+
+-- Insert data into character_relationships
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (1, 2, 'Best friend');
+
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (1, 3, 'Best friend');
+
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (2, 1, 'Best friend');
+
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (2, 3, 'Friend');
+
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (3, 1, 'Best friend');
+
+INSERT INTO character_relationships (character_id, related_character_id, relationship_description)
+VALUES (3, 2, 'Friend');
+
+--This query will retrieve friends of Hermione Granger based on the character_relationships table.
+
+SELECT fc.full_name AS character_name, cr.relationship_description
+FROM fictional_characters fc
+JOIN character_relationships cr 
+ON fc.id = cr.related_character_id
+WHERE cr.character_id = 2 AND cr.relationship_description = 'Friend';
+
+--This query will return a list of all characters and their relationships, including the character's own name if they have a relationship entry.
+
+SELECT fc.full_name AS character_name, cr.relationship_description, fc_related.full_name AS related_character_name
+FROM fictional_characters fc
+LEFT JOIN character_relationships cr 
+ON fc.id = cr.character_id
+LEFT JOIN fictional_characters fc_related ON cr.related_character_id = fc_related.id
+ORDER BY fc.full_name, cr.relationship_description;
+
+--This query counts how many friends each character has based on the character_relationships table.
+SELECT fc.full_name AS character_name, COUNT(cr.relationship_description) AS num_friends
+FROM fictional_characters fc
+LEFT JOIN character_relationships cr 
+ON fc.id = cr.character_id
+WHERE cr.relationship_description = 'Friend'
+GROUP BY fc.full_name
+ORDER BY num_friends DESC;
+
+--This query identifies characters with the most relationships based on the character_relationships table.
+
+SELECT fc.full_name AS charcter_name, COUNT(cr.relationship_description) AS num_relationships
+FROM fictional_characters fc
+JOIN character_relationships cr
+ON fc.id=cr.character_id
+GROUP BY fc.full_name
+ORDER BY num_relationships DESC
+LIMIT 1;
+
+--This query counts the number of characters in each Hogwarts house from the fictional_characters table.
+
+SELECT house_at_hogwarts, COUNT(*) AS num_characters
+FROM fictional_characters
+GROUP BY house_at_hogwarts;
+
+
+
+
