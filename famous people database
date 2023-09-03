@@ -70,7 +70,7 @@ WHERE cr.relationship_description = 'Friend'
 GROUP BY fc.full_name
 ORDER BY num_friends DESC;
 
---This query identifies characters with the most relationships based on the character_relationships table.
+--This query identifies the character with the most relationships based on the character_relationships table.
 
 SELECT fc.full_name AS charcter_name, COUNT(cr.relationship_description) AS num_relationships
 FROM fictional_characters fc
