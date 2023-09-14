@@ -1,4 +1,4 @@
-This project utilized data from the following Netflix Database:
+--This project utilized data from the following Netflix Database:
 CREATE TABLE netflix_titles_info
     ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74))
 ;
@@ -59,26 +59,30 @@ VALUES
 
 
 
-
+--Count the number of movies in the Netflix database.
 SELECT COUNT(title) 
 FROM "netflix_titles_info" 
 WHERE type='Movie';
 
+--Retrieve the earliest date a title was added to this database.
 SELECT date_added
 FROM "netflix_titles_info"
 ORDER BY date_added
 LIMIT 1;
 
+--Retrieve all titles in the database sorted alphabetically.
 SELECT title
 FROM "netflix_titles_info"
 ORDER BY title;
 
+--Retrieve the director of the movie "The Starling."
 SELECT director
 FROM "netflix_titles_info" titles
 JOIN "netflix_people" people
 ON titles.show_id=people.show_id
 WHERE title='The Starling';
 
+--Retrieve the title and release year of the oldest title in the database.
 SELECT title,release_year
 FROM "netflix_titles_info"
 ORDER BY release_year
