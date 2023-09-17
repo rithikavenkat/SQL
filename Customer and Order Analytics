@@ -1,0 +1,48 @@
+---- Count the number of orders in January with a valid 6-character orderID
+SELECT COUNT(*) AS jan_orders
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+-- Count the number of orders in January with a valid 6-character orderID and the product is 'iPhone'
+SELECT COUNT(*) AS iphone_orders
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6 AND product='iPhone'
+AND orderID <> 'Order ID';
+
+--Retrieve customer account numbers from the 'customers' table who placed orders in February and had valid 6-character orderIDs in January
+SELECT DISTINCT c.acctnum
+FROM BIT_DB.customers c
+JOIN BIT_DB.FebSales fs
+ON c.order_id=fs.orderID
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+-- Find the product with the lowest price in January, considering orders with valid 6-character orderIDs
+SELECT product,MIN(price) min_price
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6 AND orderID <> 'Order ID'
+GROUP BY product
+ORDER BY min_price
+LIMIT 1;
+
+--Calculate the total revenue for each product in January, considering orders with valid 6-character orderIDs
+SELECT Product, SUM(quantity)*price AS total_revenue
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6 AND orderID <> 'Order ID'
+GROUP BY product;
+
+-- Calculate the total quantity and revenue for orders with a specific location in February, considering orders with valid 6-character orderIDs
+SELECT product, SUM(Quantity) AS total_quantity, SUM(Quantity)*price AS revenue
+FROM BIT_DB.FebSales
+WHERE location='548 Lincoln St, Seattle, WA 98101' AND length(orderID) = 6 AND orderID <> 'Order ID';
+
+--Retrieve how many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+SELECT COUNT(c.acctnum) AS total_customers, AVG(quantity*price) AS avg_revenue
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers c
+ON Feb.orderID=c.order_id
+WHERE length(orderID) = 6 AND orderID <> 'Order ID' AND quantity>2;
+
+
+
