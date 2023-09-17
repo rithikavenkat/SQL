@@ -57,31 +57,38 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
---Query to find industries with the highest average employee tenure
+-- Retrieve the industry names along with their average employee tenure
+-- Order the result by average tenure in descending order
 SELECT industry,avg_employee_tenure
 FROM fortune_companies
 GROUP BY industry
 ORDER BY avg_employee_tenure DESC;
 
+-- Retrieve the names of companies with an average employee tenure of 7 years or more
 SELECT company_name,avg_employee_tenure
 FROM fortune_companies
 WHERE avg_employee_tenure>=7;
 
+--Retrieve the names of companies with the highest maternity leave policies (more than 12 weeks)
+-- Order the result by maximum maternity leave weeks in descending order
 SELECT company_name,MAX(maternity_leave_weeks) max_maternity_leave
 FROM fortune_companies
 GROUP BY company_name
 HAVING max_maternity_leave>12
 ORDER BY max_maternity_leave DESC;
 
+-- Retrieve the names of technology companies with healthcare benefits and more than 20 paid time off days
 SELECT company_name
 FROM fortune_companies
 WHERE industry='Technology' AND healthcare_benefits=1 AND paid_time_off_days > 20;
 
+-- Retrieve the names of companies with above-average revenue and employee count
 SELECT company_name
 FROM fortune_companies
 WHERE revenue > (SELECT AVG(revenue) FROM fortune_companies) 
 AND employees > (SELECT AVG(employees) FROM fortune_companies);
-    
+
+-- Retrieve all columns from the database along with a new column indicating 'Tech' or 'Non-Tech' based on industry
 SELECT *,
 CASE 
 WHEN industry = 'Technology' THEN 'Tech'
