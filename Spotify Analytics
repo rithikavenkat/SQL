@@ -1,0 +1,59 @@
+--For this project, I downloaded Spotify data from Kaggle.
+--Then I created a table to insert Spotify data into.
+--Finally, I performed analytics on the data using SQL. 
+
+--Creating the table:
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL );
+
+--Then I inserted the Spotify Data .csv into the table.
+--Next, I explored the data using the following SQL. 
+
+--What is the average danceability for each unique combination of artist and track in the Spotify data?
+SELECT artist_name,track_name, AVG(danceability) AS avg_danceability
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name, track_name;
+
+--Who are the top 10 artists with the highest popularity scores in the Spotify dataset?
+SELECT DISTINCT artist_name AS most_popular
+FROM BIT_DB.Spotifydata
+ORDER BY popularity 
+LIMIT 10;
+
+--What is the name of the longest song in the Spotify dataset, and who is the artist of that song?
+SELECT artist_name, track_name, duration_ms
+FROM BIT_DB.Spotifydata
+ORDER BY duration_ms DESC
+LIMIT 1;
+
+--What's the average danceability for the 10 most popular songs?
+SELECT track_name,AVG(danceability) as avg_danceability
+FROM BIT_DB.Spotifydata
+GROUP BY track_name
+ORDER BY popularity
+LIMIT 10;
+
+--What are the tracks in the Spotify dataset ranked by a custom score calculated as the product of popularity, energy, and valence?
+SELECT track_name, artist_name, (popularity * energy * valence) AS custom_score
+FROM BIT_DB.Spotifydata
+ORDER BY custom_score DESC;
+
+
+
