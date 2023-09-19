@@ -55,5 +55,9 @@ SELECT track_name, artist_name, (popularity * energy * valence) AS custom_score
 FROM BIT_DB.Spotifydata
 ORDER BY custom_score DESC;
 
-
+--What are the top 10 tracks in the dataset that have the highest combined energy and danceability scores, and who are the artists behind these tracks?
+SELECT track_name,artist_name,(energy + danceability) AS combined_score
+FROM BIT_DB.Spotifydata
+ORDER BY combined_score DESC
+LIMIT 10;
 
