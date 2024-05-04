@@ -1,4 +1,4 @@
---Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
+--Show Customers (their full names, customer ID, and country) who are not in the US. 
 SELECT c.customerID, c.Country,(c.FirstName|| ' ' ||c.LastName) AS FullName
 FROM chinook.customers c
 WHERE Country NOT LIKE'%US%';
